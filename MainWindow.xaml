@@ -1,0 +1,70 @@
+﻿<Window x:Class="Media_Player.MainWindow"
+        ResizeMode="NoResize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Media_Player"
+        mc:Ignorable="d"
+        Title="Média Player" Height="500" Width="800">
+    <Grid>
+        <Button x:Name="btnAddMedia" Content="Ajouter un média" HorizontalAlignment="Left" Height="42" Margin="10,60,0,0" VerticalAlignment="Top" Width="135" Click="BtnAddMedia_Click"/>
+        <Button x:Name="btnCreatePlaylist" Content="Créer une playlist" HorizontalAlignment="Left" Height="42" Margin="10,13,0,0" VerticalAlignment="Top" Width="135" Click="btnCreatePlaylist_Click"/>
+        <ComboBox x:Name="listPlaylist" Margin="391,23,131,403" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}"></Label>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ListBox x:Name="listMedia" HorizontalAlignment="Right" Margin="0,181,576,10" Width="199" Background="#FFD6D6D6" SelectionChanged="listMedia_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Title}"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Background="White" Margin="229,217,51,10">
+
+            <!-- To interactively stop, pause, and play the media, the LoadedBehavior 
+           property of the MediaElement must be set to "Manual". -->
+            <MediaElement Source="media\numbers.wmv" Name="myMediaElement" 
+             Width="364" Height="137" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" 
+             MediaOpened="Element_MediaOpened" MediaEnded="Element_MediaEnded"/>
+            <StackPanel HorizontalAlignment="Center" Width="509" Orientation="Horizontal">
+                <Label x:Name="mediaTime" Content="00:00:00"></Label>
+                <Slider Name="lectureSlider" Margin="2" Width="380" Minimum="0"/>
+                <Label x:Name="mediaDuration" Content="00:00:00"></Label>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Width="509" Orientation="Horizontal">
+
+                <!-- Play button. -->
+                <Button Content="START" Margin="5" Click="BtnStart_Click" />
+
+                <!-- Pause button. -->
+                <Button Content="PAUSE" Margin="5" Click="BtnPause_Click" />
+
+                <!-- Stop button. -->
+                <Button Content="STOP" Margin="5" Click="BtnStop_Click" />
+
+                <!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
+                <TextBlock Foreground="Black" VerticalAlignment="Center" Margin="5"  >Volume</TextBlock>
+                <Slider Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
+                Minimum="0" Maximum="1" Value="0.5" Width="70"/>
+
+                <!-- Volume slider. This slider allows you to change the speed of the media playback. -->
+                <TextBlock Foreground="Black" Margin="5"  VerticalAlignment="Center">Speed</TextBlock>
+                <Slider Name="speedRatioSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaSpeedRatio" 
+                Value="1" Width="70" />
+
+                <!-- Seek to slider. Ths slider allows you to jump to different parts of the media playback. -->
+                <TextBlock Foreground="Black" Margin="5"  VerticalAlignment="Center">Seek To</TextBlock>
+                <Slider Name="timelineSlider" Margin="5" ValueChanged="SeekToMediaPosition" Width="70"/>
+
+            </StackPanel>
+        </StackPanel>
+
+        <Button Content="Supprimer une playlist" HorizontalAlignment="Left" Height="42" Margin="10,107,0,0" VerticalAlignment="Top" Width="135" Click="BtnDeletePlaylist_Click"/>
+
+    </Grid>
+</Window>
